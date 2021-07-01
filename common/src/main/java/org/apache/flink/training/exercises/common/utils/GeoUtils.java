@@ -27,17 +27,17 @@ import java.util.Random;
  */
 public class GeoUtils {
 
-	// geo boundaries of the area of NYC
+	// 纽约地区的地理边界
 	public static final double LON_EAST = -73.7;
 	public static final double LON_WEST = -74.05;
 	public static final double LAT_NORTH = 41.0;
 	public static final double LAT_SOUTH = 40.5;
 
-	// area width and height
+	// 区域宽度和高度
 	public static final double LON_WIDTH = 74.05 - 73.7;
 	public static final double LAT_HEIGHT = 41.0 - 40.5;
 
-	// delta step to create artificial grid overlay of NYC
+	// 创建纽约市人工网格覆盖的增量步骤（delta step to create artificial grid overlay of NYC）
 	public static final double DELTA_LON = 0.0014;
 	public static final double DELTA_LAT = 0.00125;
 
@@ -57,6 +57,15 @@ public class GeoUtils {
 	 *
 	 * @return true if the location is within NYC boundaries, otherwise false.
 	 */
+	/**
+	 * 检查经度和纬度值指定的位置是否为
+	 * 在纽约市的地理边界内。
+	 *
+	 * @param lon 要检查的位置的经度
+	 * @param lat 要检查的位置的纬度
+	 *
+	 * @return 如果位置在纽约市边界内，则为真，否则为假。
+	 */
 	public static boolean isInNYC(float lon, float lat) {
 
 		return !(lon > LON_EAST || lon < LON_WEST) &&
@@ -74,8 +83,22 @@ public class GeoUtils {
 	 *
 	 * @return id of mapped grid cell.
 	 */
+	
+	/**
+	 * 将纬度和经度值指定的位置映射到一个单元格
+	 * 网格覆盖纽约地区。
+	 * 网格单元大约为 100 x 100 m，从西北方向依次编号
+	 * 从零开始向东南。
+	 *
+	 * @param lon 要映射的位置的经度
+	 * @param lat 地图位置的纬度
+	 *
+	 * @return 映射网格单元的 id。
+	 */
 	public static int mapToGridCell(float lon, float lat) {
-		int xIndex = (int) Math.floor((Math.abs(LON_WEST) - Math.abs(lon)) / DELTA_LON);
+		int xIndex = (int) Math.floor((Math.abs(LON_WEST) - Math.abs(lon)) / DELTA_LON); 
+		// Math.floor()取整，返回小于目标函数的最大整数,如下将会返回-2 
+		// Math.abs()计算绝对值
 		int yIndex = (int) Math.floor((LAT_NORTH - lat) / DELTA_LAT);
 
 		return xIndex + (yIndex * NUMBER_OF_GRID_X);
@@ -93,6 +116,19 @@ public class GeoUtils {
 	 * @param lat2 latitude of the second location
 	 *
 	 * @return A list of cell ids
+	 */
+	/**
+	 * 将经度和纬度指定的两个位置之间的直接路径映射到一个列表
+	 * 覆盖纽约地区的网格单元。
+	 * 网格单元大约为 100 x 100 m，从西北方向依次编号
+	 * 从零开始向东南。
+	 *
+	 * @param lon1 第一个位置的经度
+	 * @param lat1 第一个位置的纬度
+	 * @param lon2 第二个位置的经度
+	 * @param lat2 第二个位置的纬度
+	 *
+	 * @return 单元格 ID 列表
 	 */
 	public static List<Integer> mapToGridCellsOnWay(float lon1, float lat1, float lon2, float lat2) {
 
@@ -169,6 +205,13 @@ public class GeoUtils {
 	 *
 	 * @return The longitude value of the cell's center.
 	 */
+	/**
+	 * 返回网格单元中心的经度。
+	 *
+	 * @param gridCellId 网格单元格。
+	 *
+	 * @return 单元格中心的经度值。
+	 */
 	public static float getGridCellCenterLon(int gridCellId) {
 
 		int xIndex = gridCellId % NUMBER_OF_GRID_X;
@@ -177,12 +220,12 @@ public class GeoUtils {
 	}
 
 	/**
-	 * Returns the latitude of the center of a grid cell.
-	 *
-	 * @param gridCellId The grid cell.
-	 *
-	 * @return The latitude value of the cell's center.
-	 */
+	* 返回网格单元中心的纬度。
+	*
+	* @param gridCellId 网格单元格。
+	*
+	* @return 单元格中心的纬度值。
+	*/                       
 	public static float getGridCellCenterLat(int gridCellId) {
 
 		int xIndex = gridCellId % NUMBER_OF_GRID_X;
@@ -198,6 +241,12 @@ public class GeoUtils {
 	 * @param rand A random number generator.
 	 * @return A random longitude value within the NYC area.
 	 */
+	/**
+	 * 返回纽约地区内的随机经度。
+	 *
+	 * @param rand 随机数生成器。
+	 * @return 纽约地区内的随机经度值。
+	 */
 	public static float getRandomNYCLon(Random rand) {
 		return (float) (LON_EAST - (LON_WIDTH * rand.nextFloat()));
 	}
@@ -208,6 +257,13 @@ public class GeoUtils {
 	 * @param rand A random number generator.
 	 * @return A random latitude value within the NYC area.
 	 */
+	/**
+	 * 返回纽约地区内的随机纬度。
+	 *
+	 * @param rand 随机数生成器。
+	 * @return 纽约地区内的随机纬度值。
+	 */
+	
 	public static float getRandomNYCLat(Random rand) {
 		return (float) (LAT_SOUTH + (LAT_HEIGHT * rand.nextFloat()));
 	}
@@ -240,6 +296,19 @@ public class GeoUtils {
 	 * @param destLat latitude of destination
 	 * @return The direction from start to destination location
 	 */
+	/**
+	 * 返回向量从起点到终点的角度（以度为单位）
+	 * 和起点所在的 x 轴。
+	 *
+	 * <p>角度描述了目的地从起点所在的方向，即
+	 * 0° -> 东，90° -> 南，180° -> 西，270° -> 北
+	 *
+	 * @param startLon 起始位置的经度
+	 * @param startLat 起始位置纬度
+	 * @param destLon 目的地经度
+	 * @param destLat 目的地纬度
+	 * @return 起点到终点的方向
+	 */
 	public static int getDirectionAngle(
 			float startLon, float startLat, float destLon, float destLat) {
 
@@ -247,6 +316,7 @@ public class GeoUtils {
 		double y = (destLon - startLon) * Math.cos(startLat);
 
 		return (int) Math.toDegrees(Math.atan2(x, y)) + 179;
+		// Java Math.toDegrees() 方法用于将参数转化为角度
 	}
 
 }
