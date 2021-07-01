@@ -42,6 +42,23 @@ import java.time.Instant;
  * - the taxiId
  * - the driverId
  */
+
+/**
+ * TaxiRide 是一种出租车活动。 有两种类型的事件，出租车开始事件和
+ * 出租车结束事件。 isStart 标志指定事件的类型。
+ *
+ * <p>TaxiRide类包括
+ * - 开始和结束记录相同的事件的rideId
+ * - 事件的类型（开始或结束）
+ * - 事件的时间
+ * - 起始位置的经度
+ * - 起始位置的纬度
+ * - 结束位置的经度
+ * - 终点位置的纬度
+ * - 行程的乘客数量
+ * - 出租车ID
+ * - 驱动程序ID
+ */
 public class TaxiRide implements Comparable<TaxiRide>, Serializable {
 
 	/**
