@@ -17,13 +17,14 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Apache Flink Training Exercises
+# Apache Flink 训练实践
 
-Exercises that go along with the training content in the documentation.
+与文档中的培训内容相关的练习。
 
-## Table of Contents
+## 目录
 
-[**Setup your Development Environment**](#setup-your-development-environment)
+
+[**设置你的开发环境**](#setup-your-development-environment)
 
 1. [Software requirements](#software-requirements)
 1. [Clone and build the flink-training project](#clone-and-build-the-flink-training-project)
